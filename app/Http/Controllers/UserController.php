@@ -7,17 +7,19 @@ use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Inertia\Response;
+use Inertia\ResponseFactory;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(): Response|ResponseFactory
     {
         $users = User::query()->paginate(10);
 
-        return view('user.index', compact('users'));
+        return inertia('User/List', compact('users'));
     }
 
     /**
@@ -78,5 +80,10 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()->route('user.index');
+    }
+
+    public function test(): Response|ResponseFactory
+    {
+        return inertia('Test');
     }
 }
