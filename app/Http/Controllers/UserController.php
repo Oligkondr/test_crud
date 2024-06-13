@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
 use Inertia\ResponseFactory;
@@ -25,35 +24,35 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): View
+    public function create(): Response|ResponseFactory
     {
-        return view('user.create');
+        return inertia('User/Create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(UserCreateRequest $request): RedirectResponse
+    public function store(UserCreateRequest $request): string
     {
         $user = User::create($request->validated());
 
-        return redirect()->route('user.show', [$user->id]);
+        return to_route('user.show', [$user->id]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(User $user): View
+    public function show(User $user): Response|ResponseFactory
     {
-        return view('user.show', compact('user'));
+        return inertia('User/Show', compact('user'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user): View
+    public function edit(User $user): Response|ResponseFactory
     {
-        return view('user.edit', compact('user'));
+        return inertia('/User/Edit', compact('user'));
     }
 
     /**

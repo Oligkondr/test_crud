@@ -18,8 +18,14 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'gender',
+        'birthday',
         'email',
         'password',
+    ];
+
+    protected $casts = [
+        'birthday' => 'datetime:d.m.Y',
     ];
 
     /**

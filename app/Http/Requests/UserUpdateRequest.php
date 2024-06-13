@@ -26,10 +26,10 @@ class UserUpdateRequest extends FormRequest
 
         return [
             'name' => 'required|string',
-            'gender' => 'required|boolean',
+            'gender' => 'required|in:Мужской,Женский',
             'birthday' => 'required|date_format:Y-m-d',
             'email' => "required|email|unique:users,email,{$user->id}",
-            'password' => 'nullable|string|confirmed|min:1',
+            'password' => 'required|string|min:3',
         ];
     }
 
@@ -43,7 +43,6 @@ class UserUpdateRequest extends FormRequest
             'email.required' => 'Необходимо заполнить e-mail.',
             'email.email' => 'E-mail введен не корректно.',
             'email.unique' => 'E-mail не уникален.',
-            'password.confirmed' => 'Пароли не совпадают.',
             'password.min' => 'Пароль должен быть длиннее 8 символов.',
         ];
     }

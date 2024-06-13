@@ -1,9 +1,10 @@
 import { People } from 'react-bootstrap-icons';
+import { Link } from '@inertiajs/react';
 
 export default function ListBtn () {
     return (
-        <a href="/user" title="Список пользователей">
+        <Link href="/user" title="Список пользователей" className={'fs-5'}>
             <People/>
-        </a>
+        </Link>
     );
 }

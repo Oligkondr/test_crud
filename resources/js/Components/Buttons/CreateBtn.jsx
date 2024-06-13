@@ -1,9 +1,10 @@
 import { PersonPlus } from 'react-bootstrap-icons';
+import { Link } from '@inertiajs/react';
 
 export default function CreateBtn () {
     return (
-        <a href="/user/create" title="Создать пользователя" className={'text-success'}>
-            <PersonPlus/>
-        </a>
+        <Link href="/user/create" title="Создать пользователя" className={'text-success fs-4'}>
+            <PersonPlus className={'d-inline'}/>
+        </Link>
     );
 }

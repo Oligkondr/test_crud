@@ -4,18 +4,20 @@ import Col from 'react-bootstrap/Col';
 import { Table } from 'react-bootstrap';
 import Title from '@/Components/Title.jsx';
 import CreateBtn from '@/Components/Buttons/CreateBtn.jsx';
-import TableRow from '@/Components/TableRow.jsx';
+import TableRow from '@/Components/List/TableRow.jsx';
+import ShowBtn from '@/Components/Buttons/ShowBtn.jsx';
+import EditBtn from '@/Components/Buttons/EditBtn.jsx';
+import DestroyBtn from '@/Components/Buttons/DestroyBtn.jsx';
 
-function List ({users}) {
-    console.log(users);
+export default function List ({users}) {
     return (
         <Container fluid="md">
             <Row>
                 <Col>
                     <Title title={'Список пользователей'}/>
                 </Col>
-                <Col className={'text-end'}>
-                    <CreateBtn url={'abc'}/>
+                <Col className={'text-right mr-2'}>
+                    <CreateBtn/>
                 </Col>
             </Row>
             <Table striped>
@@ -38,5 +40,3 @@ function List ({users}) {
         </Container>
     );
 }
-
-export default List;
