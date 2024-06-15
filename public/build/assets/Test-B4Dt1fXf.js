@@ -1,0 +1,1 @@
+import{j as r}from"./app-CI-mXqrG.js";import{C as s,R as o,a as t}from"./Col-C7pfZlMD.js";function n(){return r.jsx(s,{fluid:"sm",children:r.jsx(o,{children:r.jsx(t,{children:"1 of 2"})})})}export{n as default};
