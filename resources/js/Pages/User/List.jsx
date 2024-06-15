@@ -25,15 +25,15 @@ export default function List ({users}) {
                 <tr>
                     <th>ID</th>
                     <th>ФИО</th>
+                    <th>E-mail</th>
                     <th>Пол</th>
                     <th>Дата рождения</th>
-                    <th>E-mail</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                {users.data.map(user => (
-                    <TableRow user={user}/>
+                {users.map((user, i) => (
+                    <TableRow key={i} user={user}/>
                 ))}
                 </tbody>
             </Table>

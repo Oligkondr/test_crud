@@ -5,52 +5,33 @@ import { Button, Form } from 'react-bootstrap';
 import Title from '@/Components/Title.jsx';
 import ListBtn from '@/Components/Buttons/ListBtn.jsx';
 import { useState } from 'react';
-import axios from 'axios';
-import ErrorModal from '@/Components/Buttons/ErrorModal.jsx';
+import { router, usePage } from '@inertiajs/react';
 
-export default function Create () {
+export default function Edit ({ user }) {
 
-    const [errors, setErrors] = useState([]);
-    const [show, setShow] = useState(false);
-    const [post, setPost] = useState({
-        name: '',
-        email: '',
-        gender: '',
-        birthday: '',
-        password: '',
+    const { errors } = usePage().props
+
+    const [data, setData] = useState({
+        name: user.name,
+        email: user.email,
+        gender: user.gender,
+        birthday: user.birthday,
     });
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
     const handleInput = (e) => {
-        setPost({ ...post, [e.target.name]: e.target.value });
+        setData({ ...data, [e.target.name]: e.target.value });
     };
 
     function handleSubmit (e) {
         e.preventDefault();
-        axios.post('/user', { ...post })
-            .then(response => {
-                window.location.href = response.url;
-            })
-            .catch(err => {
-                const errorArr = [];
-                const errors = err.response.data.errors;
-                for (const error in errors) {
-                    for (const one of errors[error]) {
-                        errorArr.push(one);
-                    }
-                }
-                setErrors(errorArr);
-                handleShow();
-            });
+        router.put(`/user/${user.id}`, data);
     }
 
     return (
         <Container fluid="md">
             <Row>
                 <Col>
-                    <Title title={'Создать пользователя'}/>
+                    <Title title={`Пользователь #${user.id}`}/>
                 </Col>
                 <Col className={'text-end'}>
                     <ListBtn/>
@@ -62,23 +43,28 @@ export default function Create () {
                     <Col>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>ФИО</Form.Label>
-                            <Form.Control type="text" name="name" placeholder="ФИО" required onChange={handleInput}/>
+                            <Form.Control type="text" name="name" value={data.name} placeholder="ФИО" required
+                                          onChange={handleInput}/>
+                            {errors.name && <Form.Text className="text-danger">{errors.name}</Form.Text>}
                         </Form.Group>
                         <Row>
                             <Col>
                                 <Form.Group className="mb-3" controlId="formBasicPassword">
                                     <Form.Label>Дата рождения</Form.Label>
-                                    <Form.Control type="date" name="birthday" placeholder="Дата рождения" required
+                                    <Form.Control type="date" name="birthday" value={data.birthday}
+                                                  placeholder="Дата рождения" required
                                                   onChange={handleInput}/>
+                                    {errors.birthday && <Form.Text className="text-danger">{errors.birthday}</Form.Text>}
                                 </Form.Group>
                             </Col>
                             <Col>
                                 <Form.Group className="mb-3" controlId="formBasicEmail">
                                     <Form.Label>Пол</Form.Label>
                                     <Form.Check type="radio" name="gender" label="Мужской" value="Мужской"
-                                                onChange={handleInput}/>
+                                                checked={data.gender === 'Мужской'} onChange={handleInput}/>
                                     <Form.Check type="radio" name="gender" label="Женский" value="Женский"
-                                                onChange={handleInput}/>
+                                                checked={data.gender === 'Женский'} onChange={handleInput}/>
+                                    {errors.gender && <Form.Text className="text-danger">{errors.gender}</Form.Text>}
                                 </Form.Group>
                             </Col>
                         </Row>
@@ -86,24 +72,16 @@ export default function Create () {
                     <Col>
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>E-mail</Form.Label>
-                            <Form.Control type="email" name="email" placeholder="E-mail" required
+                            <Form.Control type="email" name="email" value={data.email} placeholder="E-mail" required
                                           onChange={handleInput}/>
-                        </Form.Group>
-
-                        <Form.Group className="mb-3" controlId="formBasicPassword">
-                            <Form.Label>Пароль</Form.Label>
-                            <Form.Control type="password" name="password" placeholder="Пароль" required
-                                          onChange={handleInput}/>
+                            {errors.email && <Form.Text className="text-danger">{errors.email}</Form.Text>}
                         </Form.Group>
                     </Col>
                 </Row>
                 <Button variant="primary" type="submit">
-                    Создать
+                    Сохранить
                 </Button>
             </Form>
-
-            <ErrorModal errors={errors} show={show} handleClose={handleClose}/>
-
         </Container>
     );
 }

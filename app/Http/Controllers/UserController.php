@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index(): Response|ResponseFactory
     {
-        $users = User::query()->paginate(10);
+        $users = User::all();
 
         return inertia('User/List', compact('users'));
     }
@@ -36,7 +36,7 @@ class UserController extends Controller
     {
         $user = User::create($request->validated());
 
-        return to_route('user.show', [$user->id]);
+        return redirect()->route('user.show', [$user->id]);
     }
 
     /**
@@ -52,7 +52,7 @@ class UserController extends Controller
      */
     public function edit(User $user): Response|ResponseFactory
     {
-        return inertia('/User/Edit', compact('user'));
+        return inertia('User/Edit', compact('user'));
     }
 
     /**
@@ -61,10 +61,6 @@ class UserController extends Controller
     public function update(UserUpdateRequest $request, User $user): RedirectResponse
     {
         $data = $request->validated();
-
-        if (!$data['password']) {
-            unset($data['password']);
-        }
 
         $user->update($data);
 

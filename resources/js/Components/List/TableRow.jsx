@@ -9,8 +9,8 @@ export default function TableRow ({user}) {
             <td>{user.name}</td>
             <td>{user.email}</td>
             <td>{user.gender}</td>
-            <td>{user.birthday}</td>
-            <td class="text-right">
+            <td>{user.birthday_format}</td>
+            <td className={'text-right'}>
                 <ShowBtn id={user.id}/>
                 <EditBtn id={user.id}/>
                 <DestroyBtn id={user.id}/>

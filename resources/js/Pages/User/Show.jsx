@@ -15,7 +15,7 @@ export default function Show ({ user }) {
         id: 'ID',
         name: 'ФИО',
         gender: 'Пол',
-        birthday: 'Дата рождения',
+        birthday_format: 'Дата рождения',
         email: 'E-mail',
     };
 
