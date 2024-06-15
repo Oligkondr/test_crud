@@ -25,7 +25,8 @@ export default function Create () {
 
     function handleSubmit (e) {
         e.preventDefault();
-        router.post('/user', post)
+        // router.post('/user', post)
+        router.put('/user/12', post)
     }
 
     return (

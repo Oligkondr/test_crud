@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
-use Illuminate\Http\RedirectResponse;
+use Inertia\Inertia;
 use Inertia\Response;
 use Inertia\ResponseFactory;
 
@@ -32,11 +32,11 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(UserCreateRequest $request): string
+    public function store(UserCreateRequest $request): \Symfony\Component\HttpFoundation\Response
     {
         $user = User::create($request->validated());
 
-        return redirect()->route('user.show', [$user->id]);
+        return Inertia::location(route('user.show', [$user->id]));
     }
 
     /**
@@ -58,23 +58,23 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UserUpdateRequest $request, User $user): RedirectResponse
+    public function update(UserUpdateRequest $request, User $user): \Symfony\Component\HttpFoundation\Response
     {
         $data = $request->validated();
 
         $user->update($data);
 
-        return redirect()->route('user.show', [$user->id]);
+        return Inertia::location(route('user.show', [$user->id]));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user): RedirectResponse
+    public function destroy(User $user): \Symfony\Component\HttpFoundation\Response
     {
         $user->delete();
 
-        return redirect()->route('user.index');
+        return Inertia::location(route('user.index'));
     }
 
     public function test(): Response|ResponseFactory
