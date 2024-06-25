@@ -1,0 +1,13 @@
+name: test_crud
+
+on: [push]
+
+jobs:
+  phpunit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: action/checkout@v1
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist
+      - name: Run tests
+        run: php vendor/bin/phpunit
